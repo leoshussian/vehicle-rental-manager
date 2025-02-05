@@ -1,0 +1,143 @@
+@startuml
+'TODO Finish UML'
+'TODO Check preferred syntax'
+
+'https://plantuml.com/class-diagram
+'skinparam classAttributeIconSize 0
+
+
+
+package vehicle {
+abstract class Vehicle{
+        # String plateNumber
+'        TODO make up mind on plate implementation
+        - String make
+        - String model
+        - int year
+        ... Constructors ...
+        + Vehicle()
+        + Vehicle(String make, String model, int year)
+        + Vehicle(Vehicle other)
+        'TODO Check if I need setters, getters'
+        ... Misc...
+        + toString() : String
+        + equals() : boolean
+        + {abstract} clone() : Vehicle
+}
+
+abstract class Truck {
+    - double weightCapacity
+    ... Constructors ...
+    + Truck()
+    + Truck(String make, String model, int year, double weightCapacity)
+    + Truck(Truck other)
+    ... Get/Set ...
+    + getWeightCapacity() : double
+    + setWeightCapacity(double weightCapacity) : void
+    ... Misc...
+    + toString() : String
+    + equals() : boolean
+}
+abstract class Car {
+    - int passengerCapacity
+    ... Constructors ...
+    + Car()
+    + Car(String make, String model, int year, int passengerCapacity)
+    + Car(Car other)
+    ... Get/Set ...
+    + getPassengerCapacity() : int
+    + setPassengerCapacity(int passengerCapacity) : void
+    ... Misc...
+    + toString() : String
+    + equals() : boolean
+}
+
+class DieselTruck {
+    - PLATE_PREFIX : {static} String = "DT"
+    - nextPlate : {static} int = 1001
+    - double fuelCapacity
+    + DieselTruck()
+    + DieselTruck(String make, String model, int year, double weightCapacity, double fuelCapacity)
+    + DieselTruck(DieselTruck other)
+    + getFuelCapacity() : double
+    + setFuelCapacity(double fuelCapacity) : void
+    + toString() : String
+    + equals() : boolean
+    - {static} generatePlate() : String
+    + {abstract} clone() : DieselTruck
+}
+class ElectricTruck{
+    - {static} String PLATE_PREFIX = "ET"
+    - nextPlate : {static} int = 1001
+    - double range
+    + ElectricTruck()
+    + ElectricTruck(String make, String model, int year, double weightCapacity, double range)
+    + ElectricTruck(ElectricTruck other)
+    + getRange() : double
+    + setRange(double range) : void
+    + toString() : String
+    + equals() : boolean
+    - {static} generatePlate() : String
+    + {abstract} clone() : ElectricTruck
+
+}
+class GasolineCar {
+    - {static} String PLATE_PREFIX = "GC"
+    - nextPlate : {static} int = 1001
+    + GasolineCar()
+    + GasolineCar(String make, String model, int year, int passengerCapacity)
+    + GasolineCar(GasolineCar other)
+    + toString() : String
+    + equals() : boolean
+    - {static} generatePlate() : String
+    + {abstract} clone() : GasolineCar
+}
+class ElectricCar {
+    - {static} String PLATE_PREFIX = "EC"
+    - nextPlate : {static} int = 1001
+    - double range
+    + ElectricCar()
+    + ElectricCar(String make, String model, int year, int passengerCapacity, double range)
+    + ElectricCar(ElectricCar other)
+    + getRange() : double
+    + setRange(double range) : void
+    + toString() : String
+    + equals() : boolean
+    - {static} generatePlate() : String
+    + {abstract} clone() : ElectricCar
+}
+
+Vehicle <|-- Truck
+Vehicle <|-- Car
+Truck <|-- DieselTruck
+Truck <|-- ElectricTruck
+Car <|-- ElectricCar
+Car <|-- GasolineCar
+
+class Fleet {
+    - int CAPACITY
+
+    - DieselTruck[] dieselTrucks;
+    - int dieselTruckCount;
+
+    - ElectricTruck[] electricTrucks;
+    - int electricTruckCount;
+
+    - GasolineCar[] gasolineCars;
+    - int gasolineCarCount;
+
+    - ElectricCar[] electricCars;
+    - int electricCarCount;
+
+    + Fleet()
+    + Fleet(int maxCapacity)
+    + storeVehicle(Vehicle vehicle) : boolean
+    + removeVehicle(int type, int index) : boolean
+
+}
+
+Fleet o-- Vehicle
+}
+
+
+@enduml
