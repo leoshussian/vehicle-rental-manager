@@ -115,24 +115,27 @@ Car <|-- ElectricCar
 Car <|-- GasolineCar
 
 class Fleet {
-    - int CAPACITY
-
-    - DieselTruck[] dieselTrucks;
-    - int dieselTruckCount;
-
-    - ElectricTruck[] electricTrucks;
-    - int electricTruckCount;
-
-    - GasolineCar[] gasolineCars;
-    - int gasolineCarCount;
-
-    - ElectricCar[] electricCars;
-    - int electricCarCount;
-
+    - final static int TYPES = 4
+    - final int MAX_CAPACITY
+    - Vehicle[] vehicles
+    - int vehicleCount
+    ... Constructors ...
     + Fleet()
-    + Fleet(int maxCapacity)
-    + storeVehicle(Vehicle vehicle) : boolean
-    + removeVehicle(int type, int index) : boolean
+    + Fleet(int capacity)
+    + Fleet(Fleet fleet)
+    ... Operations ...
+    + addVehicle(Vehicle vehicle) : boolean
+    + removeVehicle(int index) : boolean
+    + updateVehicle(int index, Vehicle vehicle) : boolean
+    ... Getters ...
+    + retrieveVehicle(int index) : Vehicle
+    + getVehicles() : Vehicles[]
+    + getVehicleCount() : int
+    + filterVehicles(String type) : Vehicle[]
+    ... Strings ...
+    + showArray(Vehicle[] array) : String
+    + showOfType(String type) : String
+    + toString() : String
 
 }
 

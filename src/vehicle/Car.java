@@ -27,8 +27,16 @@ abstract public class Car extends Vehicle {
 
     // MISC
     @Override
+    public String getHeader(){
+        return super.getHeader() + " CAPACITY      |";
+    }
+    @Override
     public String toString(){
-        return super.toString() + " Max Capacity: " + passengerCapacity + " passengers";
+        return super.toString() + String.format(" %-2d passengers |", passengerCapacity);
+    }
+    @Override
+    public boolean equals(Object other){
+        return super.equals(other) && this.passengerCapacity == ((Car)other).passengerCapacity;
     }
     public boolean equals(Car other){
         return super.equals(other) && passengerCapacity == other.passengerCapacity;

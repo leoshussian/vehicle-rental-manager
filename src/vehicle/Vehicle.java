@@ -53,14 +53,20 @@ abstract public class Vehicle {
     }
 
     // MISC
+    public String getHeader(){
+        return "| PLATE ID   | MAKE     | MODEL    | YEAR |";
+    }
     @Override
     public String toString(){
-        return String.format("%10s - Make: %10s, Model: %10s, Year: %5d", plateNumber, make, model, year);
+        return String.format("| %-10s | %-8s | %-8s | %4d |", plateNumber, make, model, year);
     }
-    public boolean equals(Vehicle other){ // TODO This will probably change soon...
+    public boolean equals(Object other){
         if (other == null) return false;
-        else if (other.getClass() != this.getClass()) return false;
-        else return this.make.equals(other.make) && this.model.equals(other.model) && this.year == other.year;
+
+        if (other.getClass() != this.getClass()) return false;
+
+        Vehicle otherVehicle = (Vehicle) other;
+        return this.make.equals(otherVehicle.make) && this.model.equals(otherVehicle.model) && this.year == otherVehicle.year;
     }
-    protected abstract Vehicle clone();
+    public abstract Vehicle clone();
 }

@@ -25,6 +25,10 @@ public class GasolineCar extends Car {
     }
 
     @Override
+    public String getHeader(){
+        return "GASOLINE CARS:\ni " + super.getHeader();
+    }
+    @Override
     public GasolineCar clone() {
         return new GasolineCar(this);
     }

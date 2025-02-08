@@ -29,12 +29,16 @@ abstract public class Truck extends Vehicle {
     // User should not be able to change plate number
 
     // MISC.
+    public String getHeader(){
+        return super.getHeader() + " CAPACITY   |";
+    }
     @Override
     public String toString(){
-        return super.toString() + " Max Weight: " + weightCapacity + "kg";
+        return super.toString() + String.format(" %-6.2f kg |", weightCapacity);
     }
-    public boolean equals(Truck other){
-        return super.equals(other) && weightCapacity == other.weightCapacity;
+    @Override
+    public boolean equals(Object other){
+        return super.equals(other) && weightCapacity == ((Truck)other).weightCapacity;
     }
 
 }

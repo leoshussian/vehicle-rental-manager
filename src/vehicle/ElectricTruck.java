@@ -36,11 +36,19 @@ public class ElectricTruck extends Truck {
         return new ElectricTruck(this);
     }
     @Override
-    public String toString() {
-        return super.toString() + " Battery Range: " + range + "km";
+    public String getHeader(){
+        return "ELECTRIC TRUCKS:\ni " + super.getHeader() + " RANGE     | TYPE          |";
+    }
+    @Override
+    public String toString(){
+        return super.toString() + String.format(" %4.2f km | Electric Truck |", range);
     }
     public boolean equals(ElectricTruck other) {
         return super.equals(other) && this.range == other.range;
+    }
+    @Override
+    public boolean equals(Object other){
+        return super.equals(other) && this.range == ((ElectricTruck)other).range;
     }
 
     /** Generates the next plate number **/

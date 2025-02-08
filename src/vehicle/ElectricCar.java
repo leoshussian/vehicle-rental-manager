@@ -32,15 +32,23 @@ public class ElectricCar extends Car {
 
     // MISC
     @Override
-    protected ElectricCar clone(){
+    public ElectricCar clone(){
         return new ElectricCar(this);
     }
     @Override
+    public String getHeader(){
+        return "ELECTRIC CARS:\ni " + super.getHeader() + " RANGE     | TYPE         |";
+    }
+    @Override
     public String toString(){
-        return super.toString() + " Fuel Capacity: " + range + "litres";
+        return super.toString() + String.format(" %4.2f km | Electric Car |", range);
     }
     public boolean equals(ElectricCar other){
         return super.equals(other) && range == other.range;
+    }
+    @Override
+    public boolean equals(Object other){ // TODO Sanity check please
+        return super.equals(other) && this.range == ((ElectricCar)other).range;
     }
 
     /** Generates the next plate number **/
