@@ -1,4 +1,4 @@
-package vehicle;
+package com.vrm.vehicle;
 
 public class DieselTruck extends Truck {
     /** Last used plate integer **/
@@ -22,6 +22,14 @@ public class DieselTruck extends Truck {
         this.plateNumber = generatePlate();
         this.fuelCapacity = other.fuelCapacity;
     }
+    /**
+     * Creates an identical copy of vehicle. Only to be used by clone method.
+     */
+    private DieselTruck(String plateNumber, DieselTruck other){
+        super(other);
+        this.plateNumber = plateNumber;
+        this.fuelCapacity = other.fuelCapacity;
+    }
 
     // SETTER
     public void setFuelCapacity(double fuelCapacity){
@@ -34,8 +42,8 @@ public class DieselTruck extends Truck {
 
     // MISC
     @Override
-    public DieselTruck clone(){
-        return new DieselTruck(this);
+    protected DieselTruck clone(){
+        return new DieselTruck(this.plateNumber, this);
     }
     @Override
     public String getHeader(){

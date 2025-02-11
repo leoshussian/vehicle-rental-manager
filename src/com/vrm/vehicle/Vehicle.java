@@ -1,10 +1,11 @@
-package vehicle;
+package com.vrm.vehicle;
 
 abstract public class Vehicle {
     protected String plateNumber; // TODO Sanity check this!
     private String make;
     private String model;
     private int year;
+    private boolean isLeased;
 
     // CONSTRUCTORS
     /** Default vehicle constructor **/
@@ -13,6 +14,7 @@ abstract public class Vehicle {
         this.make = "Unknown";
         this.model = "Unknown";
         this.year = 0;
+        this.isLeased = false;
     }
     /** Parameterized constructor. **/
     public Vehicle(String make, String model, int year){
@@ -20,11 +22,11 @@ abstract public class Vehicle {
         this.make = make;
         this.model = model;
         this.year = year;
+        this.isLeased = false;
     }
     /** Copy constructor **/
     public Vehicle(Vehicle other){
         this(other.make, other.model, other.year);
-        this.plateNumber = "UNASSIGNED";
     }
 
     // GETTERS
@@ -40,6 +42,9 @@ abstract public class Vehicle {
     public int getYear() {
         return year;
     }
+    public boolean getIsLeased() {
+        return isLeased;
+    }
 
     // SETTERS
     public void setMake(String make) {
@@ -50,6 +55,9 @@ abstract public class Vehicle {
     }
     public void setYear(int year) {
         this.year = year;
+    }
+    public void setIsLeased(boolean isLeased) {
+        this.isLeased = isLeased;
     }
 
     // MISC
@@ -68,5 +76,5 @@ abstract public class Vehicle {
         Vehicle otherVehicle = (Vehicle) other;
         return this.make.equals(otherVehicle.make) && this.model.equals(otherVehicle.model) && this.year == otherVehicle.year;
     }
-    public abstract Vehicle clone();
+    protected abstract Vehicle clone();
 }

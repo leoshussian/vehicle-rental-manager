@@ -1,4 +1,4 @@
-package vehicle;
+package com.vrm.vehicle;
 
 public class GasolineCar extends Car {
     /** Last used plate integer **/
@@ -18,6 +18,10 @@ public class GasolineCar extends Car {
         super(other);
         this.plateNumber = generatePlate();
     }
+    public GasolineCar (String plateNumber, GasolineCar other){
+        super(other);
+        this.plateNumber = plateNumber;
+    }
 
     /** Generates the next plate number **/
     private static String generatePlate() {
@@ -29,7 +33,7 @@ public class GasolineCar extends Car {
         return "GASOLINE CARS:\ni " + super.getHeader();
     }
     @Override
-    public GasolineCar clone() {
-        return new GasolineCar(this);
+    protected GasolineCar clone() {
+        return new GasolineCar(this.plateNumber, this);
     }
 }

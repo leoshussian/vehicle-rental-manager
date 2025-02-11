@@ -1,4 +1,4 @@
-package vehicle;
+package com.vrm.vehicle;
 
 abstract public class Truck extends Vehicle {
     private double weightCapacity;

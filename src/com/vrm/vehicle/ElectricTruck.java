@@ -1,4 +1,4 @@
-package vehicle;
+package com.vrm.vehicle;
 
 public class ElectricTruck extends Truck {
     private static int lastPlate = 1001;
@@ -21,6 +21,11 @@ public class ElectricTruck extends Truck {
         this.plateNumber = generatePlate();
         this.range = other.range;
     }
+    public ElectricTruck(String plateNumber, ElectricTruck other) {
+        super(other);
+        this.plateNumber = plateNumber;
+        this.range = other.range;
+    }
 
     // SET/GET
     public void setRange(double range) {
@@ -32,8 +37,8 @@ public class ElectricTruck extends Truck {
 
     // MISC.
     @Override
-    public ElectricTruck clone() {
-        return new ElectricTruck(this);
+    protected ElectricTruck clone() {
+        return new ElectricTruck(this.plateNumber, this);
     }
     @Override
     public String getHeader(){

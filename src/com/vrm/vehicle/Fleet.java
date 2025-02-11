@@ -1,11 +1,10 @@
-package vehicle;
+package com.vrm.vehicle;
 
 /**
  * Stores and manages all company cars.
  * Handles vehicle creation and update. Stores fleet in arrays by type of vehicle.
  */
 public class Fleet {
-    private final static int TYPES = 4;
     private final int MAX_CAPACITY;
     private Vehicle[] vehicles;
     private int vehicleCount;
@@ -97,37 +96,55 @@ public class Fleet {
         int count = 0;
         for (int i = 0; i < vehicleCount; i++) {
             if (vehicles[i] == null) continue;
-            if (vehicles[i].toString().toLowerCase().contains(type.toLowerCase())){ // Check if the vehicle contains the requested type{
-                returnArray[count++] = vehicles[i].clone();
+            // Check if the vehicle contains the requested type
+            if (vehicles[i].toString().toLowerCase().contains(type.toLowerCase())){
+                // Add vehicle clone to return array
+                returnArray[count] = vehicles[i].clone();
+                // Increment index
+                count++;
             }
         }
         return returnArray;
     }
 
-    // MISC
-    public String showArray(Vehicle[] array){
-        if (array == null || array.length == 0) return "";
-        String returnString = array[0] != null ? array[0].getHeader() + "\n" : "";
-        int i = 0;
-        for (Vehicle vehicle : array) {
-            if (vehicle == null) continue;
-            returnString += i++ + " ";
-            returnString += vehicle + "\n";
-        }
-        return returnString + "\n";
-    }
+    // DISPLAY METHODS
+    /**
+     * Fetches array of specified type then calls {@link this.showArray()}
+     * @param type Type of vehicle: Diesel Truck (DT), Electric Truck (ET), Electric Car (EC), Gas Car (GC).
+     * @return String of array of vehicles with header.
+     */
     public String showOfType(String type){
         if (vehicles == null || vehicles.length == 0) return "Fleet contains no vehicles.";
         Vehicle[] array = filterVehicles(type);
-        return showArray(array);
+        return showArray(array, vehicleCount);
     }
+
     @Override
     public String toString(){
+        return showArray(vehicles, vehicleCount);
+    }
+
+    // MISC.
+    /**
+     * Helper method.
+     * @param vehicleArray of vehicles of same type.
+     * @return String of array vehicles with header.
+     */
+    public static String showArray(Vehicle[] vehicleArray, int vehicleCount) {
         String returnString = "";
+
+        // Check for empty or null fleet
+        if (vehicleArray == null || vehicleArray.length == 0) return "Fleet contains no vehicles.";
+
         for (int i = 0; i < vehicleCount; i++){
-            if (vehicles[i] == null) continue;
-            if (i == 0 || vehicles[i].getClass() != vehicles[i-1].getClass()) returnString += vehicles[i].getHeader() + "\n";
-            returnString += i + " " + vehicles[i].toString() + "\n";
+
+            if (vehicleArray[i] == null) continue;
+
+            // If the next vehicle is of a new type add header
+            if (i == 0 || vehicleArray[i].getClass() != vehicleArray[i-1].getClass())
+                returnString += vehicleArray[i].getHeader() + "\n";
+
+            returnString += i + " " + vehicleArray[i].toString() + "\n";
         }
         return returnString;
     }

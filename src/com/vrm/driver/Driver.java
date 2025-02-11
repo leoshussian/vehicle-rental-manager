@@ -1,17 +1,24 @@
-package driver;
+package com.vrm.driver;
 
-import vehicle.DieselTruck;
-import vehicle.ElectricCar;
-import vehicle.Fleet;
-import vehicle.GasolineCar;
+import com.vrm.client.ClientManager;
+import com.vrm.client.LeaseManager;
+import com.vrm.vehicle.DieselTruck;
+import com.vrm.vehicle.Fleet;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args) {
-        Fleet fleet = new Fleet(); // Assuming you have a Fleet class
-        Random rand = new Random();
 
+    static Scanner key = new Scanner(System.in);
+    static Fleet fleet = new Fleet(30);
+    static ClientManager clientManager = new ClientManager();
+    static LeaseManager leaseManager = new LeaseManager(fleet);
+
+    public static void main(String[] args) {
+        Random rand = new Random();
+        System.out.println();
+        System.out.println();
         String[] makes = {"Ford", "Chevy", "Ram", "Volvo", "Peterbilt"};
         String[] models = {"F-150", "Silverado", "1500", "VNL", "579"};
 
@@ -28,5 +35,14 @@ public class Driver {
 
         System.out.println("20 trucks added to the fleet.");
 
+        ClientController.updateClient();
+        ClientController.createClient();
+        ClientController.createClient();
+        ClientController.updateClient();
+        ClientController.deleteClient();
+        ClientController.deleteClient();
+
+        FleetController.createVehicle();
+        FleetController.updateVehicle();
     }
 }
