@@ -34,15 +34,24 @@ public class Driver {
         }
 
         System.out.println("20 trucks added to the fleet.");
+        FleetController.showOfType();
+        FleetController.getLargestTruck();
+        FleetController.copyElectricTrucks();
+        ClientController.createClient();
+        ClientController.createClient();
+        ClientController.updateClient();
+        ClientController.deleteClient();
+        ClientController.createClient();
 
-        ClientController.updateClient();
-        ClientController.createClient();
-        ClientController.createClient();
-        ClientController.updateClient();
-        ClientController.deleteClient();
-        ClientController.deleteClient();
+        LeaseController.showAll();
+        LeaseController.leaseVehicle();
+        LeaseController.leaseVehicle();
+        LeaseController.showByClient();
+        LeaseController.endLease();
+        LeaseController.showAll();
 
         FleetController.createVehicle();
         FleetController.updateVehicle();
+        FleetController.deleteVehicle();
     }
 }

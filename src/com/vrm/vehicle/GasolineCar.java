@@ -30,7 +30,7 @@ public class GasolineCar extends Car {
 
     @Override
     public String getHeader(){
-        return "GASOLINE CARS:\ni " + super.getHeader();
+        return "GASOLINE CARS:\nid " + super.getHeader();
     }
     @Override
     protected GasolineCar clone() {

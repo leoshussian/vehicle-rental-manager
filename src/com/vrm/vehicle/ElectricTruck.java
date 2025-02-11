@@ -42,7 +42,7 @@ public class ElectricTruck extends Truck {
     }
     @Override
     public String getHeader(){
-        return "ELECTRIC TRUCKS:\ni " + super.getHeader() + " RANGE     | TYPE          |";
+        return "ELECTRIC TRUCKS:\nid " + super.getHeader() + " RANGE     | TYPE          |";
     }
     @Override
     public String toString(){

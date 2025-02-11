@@ -31,7 +31,7 @@ public class Lease {
 
     public String getHeader(){
         return """
-                | ID | Client Name |  Plate ID  |""";
+                | ID | CLIENT NAME          |  PLATE ID  |""";
     }
     @Override
     public String toString(){

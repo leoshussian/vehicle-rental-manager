@@ -17,37 +17,52 @@ public class LeaseManager {
         return this.leasedVehiclesCount;
     }
 
-    public boolean createLease(Client client, String plateNumber){
+    /**
+     * Instantiates {@link Lease} and add it to {@link this.leasedVehicles}.
+     * Makes {@link Vehicle}.isLeased = true.
+     * @return 0 if successful, 1 if vehicle = null, 2 if vehicle is already leased, 3 if array is full.
+     */
+    public int createLease(Client client, String plateNumber){
         // Get vehicle
         Vehicle vehicle = fleet.retrieveVehicle(plateNumber);
 
         // Check nonnull
-        if (vehicle == null) return false;
+        if (vehicle == null) return 1;
 
         // Check vehicle is not leased already
-        if (vehicle.getIsLeased()) return false;
+        if (vehicle.getIsLeased()) return 2;
 
         // Check if there is space (there should be, this is a sanity check)
-        if (leasedVehiclesCount + 1 >= leasedVehicles.length) return false;
+        if (leasedVehiclesCount + 1 >= leasedVehicles.length) return 3;
 
         // Finally add the lease
-        vehicle.setIsLeased(true);
+        if (!fleet.toggleLeased(plateNumber)) return 4; // returns error if the toggle doesn't work
         leasedVehicles[leasedVehiclesCount++] = new Lease(client, plateNumber);
-        return true;
+        return 0;
     }
-    public boolean removeLease(int iD){
-        if (leasedVehiclesCount == 0) return false;
+    public int getLastLeaseID(){
+        return leasedVehicles[leasedVehiclesCount - 1].getID();
+    }
+    public int removeLease(int iD){
+        if (leasedVehiclesCount == 0) return 1;
 
         // Get vehicle with requested iD
-        for (Lease lease : leasedVehicles) {
-            if (lease.getID() == iD) {
-                leasedVehicles[leasedVehiclesCount] = leasedVehicles[leasedVehiclesCount-1];
-                leasedVehicles[leasedVehiclesCount] = null;
+        int i = 0;
+        for (; i < leasedVehiclesCount; i++) {
+            // If ID matches
+            if (leasedVehicles[i] != null && leasedVehicles[i].getID() == iD) {
+                // Toggle isLeased
+                String plateNumber = leasedVehicles[i].getPlateNumber();
+                fleet.toggleLeased(plateNumber);
+
+                // Delete
+                leasedVehicles[i] = leasedVehicles[leasedVehiclesCount - 1];
+                leasedVehicles[leasedVehiclesCount - 1] = null;
                 leasedVehiclesCount--;
-                return true;
+                return 0;
             }
         }
-        return false;
+        return 2;
     }
     public Lease retrieveLease(int iD){
         if (leasedVehiclesCount == 0) return null;
@@ -96,33 +111,38 @@ public class LeaseManager {
     public String showClientLeases(String clientName) {
         if (leasedVehiclesCount == 0) return "This customer has no leases yet.";
         Lease[] clientLeases = getClientLeases(clientName);
-        String returnString = clientLeases[0].getHeader() + "| Vehicle "; //TODO Sanity check copy paste from toString()
+        String returnString = " ID | Vehicle\n";
         for (Lease lease : clientLeases) {
+            // Check nonnull
+            if (lease == null) continue;
+
             // Fetch vehicle
             String plateID = lease.getPlateNumber();
             Vehicle vehicle = fleet.retrieveVehicle(plateID);
 
             // Display name
             String name = vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getYear();
-            int year = vehicle.getYear();
 
-            returnString += lease + name + year + " |";
+            returnString += String.format(" %2d | %s\n", lease.getID(), name);
         }
         return returnString;
     }
     @Override
     public String toString() {
-        String returnString = leasedVehicles[0].getHeader() + "| Vehicle ";
+        if (leasedVehicles == null || leasedVehicles[0] == null) return "There are no leased vehicles to display.";
+        String returnString = leasedVehicles[0].getHeader() + " Vehicle\n";
         for (Lease lease : leasedVehicles) {
+            // Skip null
+            if (lease == null) continue;
+
             // Fetch vehicle
             String plateID = lease.getPlateNumber();
             Vehicle vehicle = fleet.retrieveVehicle(plateID);
 
             // Display name
-            String name = vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getYear();
-            int year = vehicle.getYear();
+            String name = vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel();
 
-            returnString += lease + name + year + " |";
+            returnString += lease + " " + name + "\n";
         }
         return returnString;
     }

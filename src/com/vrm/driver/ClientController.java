@@ -21,6 +21,12 @@ public class ClientController {
         System.out.print("First and Last Name: ");
         String name = Driver.key.nextLine();
 
+        // Check name does not exist
+        if (clientManager.retrieveClient(name) != null) {
+            System.err.println("Sorry, a client with the same name already exists.");
+            return false;
+        };
+
         Client client = new Client(name);
         return clientManager.addClient(client);
     }
@@ -77,6 +83,13 @@ public class ClientController {
         System.out.println(client);
         System.out.print("Please enter a new name for your client: ");
         String name = Driver.key.nextLine();
+
+        // Check if a customer with the same name does not exist.
+        if (clientManager.retrieveClient(name) != null) {
+            System.err.println("Sorry, a client with the same name already exists.");
+            return false;
+        }
+
         System.out.println("Are you sure you would like to proceed?");
         if (MenuHelper.pressToConfirm()) {
             System.out.println("Successfully updated client.");

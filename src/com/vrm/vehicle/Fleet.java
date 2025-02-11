@@ -27,7 +27,7 @@ public class Fleet {
     // ARRAY OPERATIONS
     public boolean addVehicle(Vehicle vehicle) {
         // Check capacity
-        if (vehicleCount >= MAX_CAPACITY) return false;
+        if (vehicleCount + 1 >= MAX_CAPACITY) return false;
 
         // Check nonnull
         if (vehicle == null) return false;
@@ -35,6 +35,17 @@ public class Fleet {
         // Add vehicle
         vehicles[vehicleCount] = vehicle.clone();
         vehicleCount++;
+        return true;
+    }
+    public boolean appendArray(Vehicle[] vehicles) {
+        if (vehicles == null) return false;
+        if (vehicleCount + vehicles.length >= MAX_CAPACITY) return false;
+
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle == null) continue;
+            vehicles[vehicleCount] = vehicle.clone();
+            vehicleCount++;
+        }
         return true;
     }
     public boolean removeVehicle(int index) {
@@ -67,6 +78,17 @@ public class Fleet {
             if (vehicle.getPlateNumber().equals(plateNumber)) return vehicle.clone();
         }
         return null;
+    }
+    public boolean toggleLeased(String plateNumber) {
+        int count = 0;
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle == null) continue;
+            else if (vehicle.getPlateNumber().equals(plateNumber)) {
+                vehicle.setIsLeased(!vehicle.getIsLeased());
+                count++;
+            }
+        }
+        return count != 0;
     }
 
     // GETTERS
@@ -144,8 +166,34 @@ public class Fleet {
             if (i == 0 || vehicleArray[i].getClass() != vehicleArray[i-1].getClass())
                 returnString += vehicleArray[i].getHeader() + "\n";
 
-            returnString += i + " " + vehicleArray[i].toString() + "\n";
+            returnString += String.format("%2d %s\n", i, vehicleArray[i]);
         }
         return returnString;
+    }
+    public DieselTruck getLargestTruck(){
+        DieselTruck dummy = new DieselTruck();
+        for (Vehicle vehicle : vehicles) {
+
+            // Find nonnull Diesel Truck
+            if (vehicle != null && vehicle.getClass() == dummy.getClass()) {
+
+                // Downcast
+                DieselTruck truck = (DieselTruck) vehicle;
+
+                // Check if weight greater than previous pick
+                if (truck.getWeightCapacity() > dummy.getWeightCapacity())
+                    // if so make it the new target
+                    dummy = truck;
+            }
+        }
+        return dummy;
+    }
+    public static ElectricTruck[] copyVehicles(ElectricTruck[] array){
+        ElectricTruck[] returnArray = new ElectricTruck[array.length];
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null) continue;
+            returnArray[i] = new ElectricTruck(array[i]);
+        }
+        return returnArray;
     }
 }

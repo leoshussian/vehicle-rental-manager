@@ -27,6 +27,7 @@ abstract public class Vehicle {
     /** Copy constructor **/
     public Vehicle(Vehicle other){
         this(other.make, other.model, other.year);
+        isLeased = other.isLeased;
     }
 
     // GETTERS
@@ -62,11 +63,11 @@ abstract public class Vehicle {
 
     // MISC
     public String getHeader(){
-        return "| PLATE ID   | MAKE     | MODEL    | YEAR |";
+        return "| PLATE ID | MAKE          | MODEL       | YEAR |";
     }
     @Override
     public String toString(){
-        return String.format("| %-10s | %-8s | %-8s | %4d |", plateNumber, make, model, year);
+        return String.format("| %-8s | %-13s | %-11s | %4d |", plateNumber, make, model, year);
     }
     public boolean equals(Object other){
         if (other == null) return false;
@@ -74,7 +75,7 @@ abstract public class Vehicle {
         if (other.getClass() != this.getClass()) return false;
 
         Vehicle otherVehicle = (Vehicle) other;
-        return this.make.equals(otherVehicle.make) && this.model.equals(otherVehicle.model) && this.year == otherVehicle.year;
+        return this.make.equals(otherVehicle.make) && this.model.equals(otherVehicle.model) && this.year == otherVehicle.year && this.isLeased == otherVehicle.isLeased;
     }
     protected abstract Vehicle clone();
 }

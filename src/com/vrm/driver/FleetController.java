@@ -301,7 +301,50 @@ public class FleetController {
         return true;
     }
 
+    public static void showAll(){
+        System.out.println("ALL VEHICLES");
+        System.out.println(Driver.fleet);
+    }
+    public static void showOfType(){
+        System.out.println("What type of vehicle would you like to view?");
+        int type = MenuHelper.pickType();
+        String output = switch (type) {
+            case 1 -> Driver.fleet.showOfType("EC");
+            case 2 -> Driver.fleet.showOfType("GT");
+            case 3 -> Driver.fleet.showOfType("DT");
+            case 4 -> Driver.fleet.showOfType("ET");
+            default -> "None found of this type.";
+        };
+        System.out.println(output);
+    }
+
+    public static void getLargestTruck(){
+        DieselTruck truck = Driver.fleet.getLargestTruck();
+        if (truck.getWeightCapacity() == 0){
+            System.err.println("You do not have any diesel trucks in your fleet.");
+        }
+        System.out.println("The largest truck in your fleet is:");
+        System.out.println(truck);
+    }
+    public static boolean copyElectricTrucks(){
+        System.out.println("Are you sure you want to copy all electric trucks?");
+        if (!MenuHelper.pressToConfirm()) return true;
+
+        // Generate array
+        Vehicle[] target = Driver.fleet.filterVehicles("Electric Truck");
+        if (target == null || target[0] == null){
+            System.err.println("You do not have any electric trucks in your fleet.");
+            return false;
+        }
+
+        ElectricTruck[] electricTrucks = (ElectricTruck[]) target;
 
 
+        // Copy!
+        ElectricTruck[] copy = Fleet.copyVehicles(electricTrucks);
+
+        // Add to fleet
+        return Driver.fleet.appendArray(copy);
+    }
 
 }

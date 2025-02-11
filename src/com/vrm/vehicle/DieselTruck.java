@@ -47,7 +47,7 @@ public class DieselTruck extends Truck {
     }
     @Override
     public String getHeader(){
-        return "DIESEL TRUCKS:\ni " + super.getHeader() + " FUEL TANK    | TYPE         |";
+        return "DIESEL TRUCKS:\nid " + super.getHeader() + " FUEL TANK    | TYPE         |";
     }
     @Override
     public String toString(){

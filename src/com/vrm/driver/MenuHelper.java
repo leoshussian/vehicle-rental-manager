@@ -30,6 +30,7 @@ public class MenuHelper {
         return choice;
     }
 
+    // TODO I'm 80% sure the next 3 methods can be generalized
     /**
      * Displays vehicles and prompts for valid index choice.
      */
@@ -64,6 +65,22 @@ public class MenuHelper {
         return choice;
     }
 
+    // Leases
+    public static int pickLease(){
+        System.out.println(Driver.leaseManager);
+        int choice;
+        while (true) {
+            System.out.print("Please enter the requested lease ID: ");
+            choice = Driver.key.nextInt();
+            if (Driver.leaseManager.retrieveLease(choice) == null){
+                System.err.println("Your choice was invalid.");
+            }
+            else break;
+        }
+        Driver.key.nextLine(); // Flush!
+        return choice;
+    }
+
     /**
      * @return true if user confirms.
      */
@@ -71,5 +88,9 @@ public class MenuHelper {
         System.out.println("-> Press <ENTER> to continue, or type <N> to cancel <-");
         String input = Driver.key.nextLine();
         return !input.equalsIgnoreCase("N");
+    }
+    public static void pressToContinue(){
+        System.out.println("-> Press <ENTER> to continue <-");
+        String input = Driver.key.nextLine();
     }
 }

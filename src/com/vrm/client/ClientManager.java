@@ -38,6 +38,13 @@ public class ClientManager {
         if (index < 0 || index >= clientCount) return null;
         return new Client(clients[index]);
     }
+    public Client retrieveClient(String name) {
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i] == null) continue;
+            if (clients[i].getName().equalsIgnoreCase(name)) return clients[i];
+        }
+        return null;
+    }
 
     // CLIENT OPERATIONS
     public boolean addClient(Client client) {
@@ -66,7 +73,12 @@ public class ClientManager {
         return true;
     }
     public boolean updateClient(int index, String name) {
+        // Check valid index
         if (index < 0 || index >= clientCount) return false;
+
+        // Check name does not exist
+        if (retrieveClient(name) != null) return false;
+
         clients[index].setName(name);
         return true;
     }
