@@ -67,6 +67,7 @@ public class LeaseManager {
     public Lease retrieveLease(int iD){
         if (leasedVehiclesCount == 0) return null;
         for (Lease lease : leasedVehicles) {
+            if (lease == null) continue;
             if (lease.getID() == iD) {
                 return lease;
             }

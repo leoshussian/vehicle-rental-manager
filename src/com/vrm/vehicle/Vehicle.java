@@ -63,11 +63,12 @@ abstract public class Vehicle {
 
     // MISC
     public String getHeader(){
-        return "| PLATE ID | MAKE          | MODEL       | YEAR |";
+        return "| ON HAND | PLATE ID | MAKE          | MODEL       | YEAR |";
     }
     @Override
     public String toString(){
-        return String.format("| %-8s | %-13s | %-11s | %4d |", plateNumber, make, model, year);
+        String leasedFlag = !this.isLeased ? "█YES█████" : "░NO░░░░░░";
+        return String.format("|%s| %-8s | %-13s | %-11s | %4d |", leasedFlag, plateNumber, make, model, year);
     }
     public boolean equals(Object other){
         if (other == null) return false;
@@ -77,5 +78,6 @@ abstract public class Vehicle {
         Vehicle otherVehicle = (Vehicle) other;
         return this.make.equals(otherVehicle.make) && this.model.equals(otherVehicle.model) && this.year == otherVehicle.year && this.isLeased == otherVehicle.isLeased;
     }
+    @Override
     protected abstract Vehicle clone();
 }

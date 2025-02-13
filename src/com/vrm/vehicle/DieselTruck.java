@@ -47,11 +47,11 @@ public class DieselTruck extends Truck {
     }
     @Override
     public String getHeader(){
-        return "DIESEL TRUCKS:\nid " + super.getHeader() + " FUEL TANK    | TYPE         |";
+        return "DIESEL TRUCKS:\nid " + super.getHeader() + " FUEL TANK     | TYPE         |";
     }
     @Override
     public String toString(){
-        return super.toString() + String.format(" %4.2f litres | Diesel Truck |", fuelCapacity);
+        return super.toString() + String.format(" %04.2f litres | Diesel Truck |", fuelCapacity);
     }
     public boolean equals(DieselTruck other){
         return super.equals(other) && fuelCapacity == other.fuelCapacity;

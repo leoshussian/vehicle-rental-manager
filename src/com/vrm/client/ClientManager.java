@@ -89,7 +89,7 @@ public class ClientManager {
         String returnString = "";
         if (clients == null || clientCount == 0) return "No customers to display yet.";
         for (int i = 0; i < clientCount; i++) {
-            returnString += i + " | " + clients[i] + "\n";
+            returnString += "\n" + i + " | " + clients[i];
         }
         return returnString;
     }

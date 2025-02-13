@@ -32,7 +32,7 @@ abstract public class Car extends Vehicle {
     }
     @Override
     public String toString(){
-        return super.toString() + String.format(" %-2d passengers |", passengerCapacity);
+        return super.toString() + String.format(" %02d passengers |", passengerCapacity);
     }
     @Override
     public boolean equals(Object other){

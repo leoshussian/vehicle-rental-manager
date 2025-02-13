@@ -30,11 +30,11 @@ abstract public class Truck extends Vehicle {
 
     // MISC.
     public String getHeader(){
-        return super.getHeader() + " CAPACITY   |";
+        return super.getHeader() + " CAPACITY    |";
     }
     @Override
     public String toString(){
-        return super.toString() + String.format(" %-6.2f kg |", weightCapacity);
+        return super.toString() + String.format(" %-8.2f kg |", weightCapacity);
     }
     @Override
     public boolean equals(Object other){

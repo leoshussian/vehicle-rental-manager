@@ -46,7 +46,7 @@ public class ElectricCar extends Car {
     }
     @Override
     public String toString(){
-        return super.toString() + String.format(" %4.2f km | Electric Car |", range);
+        return super.toString() + String.format(" %06.2f km | Electric Car |", range);
     }
     public boolean equals(ElectricCar other){
         return super.equals(other) && range == other.range;

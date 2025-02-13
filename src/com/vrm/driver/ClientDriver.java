@@ -3,11 +3,44 @@ package com.vrm.driver;
 import com.vrm.client.Client;
 import com.vrm.client.ClientManager;
 
-public class ClientController {
-    private static final ClientManager clientManager = Driver.clientManager;
+public class ClientDriver {
+    private static ClientManager clientManager = Driver.clientManager;
 
+    public static void getMenu(){
+
+        final int MAX_MAIN_OPTIONS = 4;
+        int choice = 0;
+
+        // Loop menu until user wants to return to main
+        while (choice != 4) {
+            final String MAIN_MENU = String.format("""
+                ------------------------------------- ░░      ░░
+                                                      ▒  ▒▒▒▒  ▒
+                                                      ▓  ▓▓▓▓▓▓▓
+                 CLIENT MANAGEMENT                    █  ████  █
+                 Number of clients: %02d                ██      ██
+                ________________________________________________
+                1 | Add a client
+                2 | Delete a client
+                3 | Update client data
+                4 | Back
+              """, clientManager.getClientCount());
+
+            choice = Selector.pickItem(MAIN_MENU, 1, MAX_MAIN_OPTIONS + 1);
+            boolean isValid = switch (choice) {
+                case 1 -> createClient();
+                case 2 -> deleteClient();
+                case 3 -> updateClient();
+                case 4 -> true;
+                default -> {
+                    System.err.println("Unexpected choice in ClientDriver main menu");
+                    yield false;
+                }
+            };
+        }
+    }
     public static boolean createClient(){
-        // Check for space
+        // 1. Check for space
         if (clientManager.getClientCount() >= clientManager.getMaxClients()) {
             System.err.println("""
                     ERROR!
@@ -16,12 +49,13 @@ public class ClientController {
             return false;
         }
 
+        // 2. Prompt for new name
         System.out.println("NEW CLIENT");
 
         System.out.print("First and Last Name: ");
         String name = Driver.key.nextLine();
 
-        // Check name does not exist
+        // 3. Check name does not exist
         if (clientManager.retrieveClient(name) != null) {
             System.err.println("Sorry, a client with the same name already exists.");
             return false;
@@ -41,7 +75,7 @@ public class ClientController {
 
         // Retrieve client
         System.out.println("Which client would you like to delete?");
-        int index = MenuHelper.pickClient();
+        int index = Selector.pickItem(clientManager.toString(), 0, clientManager.getClientCount());
 
         // Fetch name for leaseManager
         String clientName = clientManager.retrieveClient(index).getName();
@@ -57,7 +91,7 @@ public class ClientController {
 
         // Confirm
         System.out.println("Are you sure you want to delete " + clientName + "?");
-        if (!MenuHelper.pressToConfirm()) {
+        if (!Selector.pressToConfirm()) {
             System.out.println("Okay, this client will not be deleted.");
             return false;
         }
@@ -76,7 +110,7 @@ public class ClientController {
         }
 
         System.out.println("Which client would you like to edit?");
-        int index = MenuHelper.pickClient();
+        int index = Selector.pickItem(clientManager.toString(), 0, clientManager.getClientCount());
 
         // Display client
         Client client = clientManager.retrieveClient(index);
@@ -91,7 +125,7 @@ public class ClientController {
         }
 
         System.out.println("Are you sure you would like to proceed?");
-        if (MenuHelper.pressToConfirm()) {
+        if (Selector.pressToConfirm()) {
             System.out.println("Successfully updated client.");
             // Push update
             return clientManager.updateClient(index, name);

@@ -21,7 +21,7 @@ public class ElectricTruck extends Truck {
         this.plateNumber = generatePlate();
         this.range = other.range;
     }
-    public ElectricTruck(String plateNumber, ElectricTruck other) {
+    private ElectricTruck(String plateNumber, ElectricTruck other) {
         super(other);
         this.plateNumber = plateNumber;
         this.range = other.range;
@@ -42,11 +42,11 @@ public class ElectricTruck extends Truck {
     }
     @Override
     public String getHeader(){
-        return "ELECTRIC TRUCKS:\nid " + super.getHeader() + " RANGE     | TYPE          |";
+        return "ELECTRIC TRUCKS:\nid " + super.getHeader() + " RANGE     | TYPE           |";
     }
     @Override
     public String toString(){
-        return super.toString() + String.format(" %4.2f km | Electric Truck |", range);
+        return super.toString() + String.format(" %06.2f km | Electric Truck |", range);
     }
     public boolean equals(ElectricTruck other) {
         return super.equals(other) && this.range == other.range;
@@ -60,4 +60,6 @@ public class ElectricTruck extends Truck {
     private static String generatePlate() {
         return PLATE_PREFIX + lastPlate++;
     }
+
+
 }

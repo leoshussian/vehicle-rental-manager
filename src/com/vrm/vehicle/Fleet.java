@@ -20,14 +20,11 @@ public class Fleet {
         vehicles = new Vehicle[MAX_CAPACITY];
         vehicleCount = 0;
     }
-    public Fleet(Fleet fleet){
-        this(fleet.MAX_CAPACITY);
-    }
 
     // ARRAY OPERATIONS
     public boolean addVehicle(Vehicle vehicle) {
         // Check capacity
-        if (vehicleCount + 1 >= MAX_CAPACITY) return false;
+        if (vehicleCount >= MAX_CAPACITY) return false;
 
         // Check nonnull
         if (vehicle == null) return false;
@@ -37,14 +34,16 @@ public class Fleet {
         vehicleCount++;
         return true;
     }
-    public boolean appendArray(Vehicle[] vehicles) {
-        if (vehicles == null) return false;
-        if (vehicleCount + vehicles.length >= MAX_CAPACITY) return false;
+    public boolean appendArray(Vehicle[] newVehicles) {
+        if (newVehicles == null) return false;
+        if (this.vehicleCount + newVehicles.length >= MAX_CAPACITY) return false;
 
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle == null) continue;
-            vehicles[vehicleCount] = vehicle.clone();
-            vehicleCount++;
+        for (Vehicle vehicle : newVehicles) {
+            if (vehicle == null) {
+                continue;
+            }
+            this.vehicles[vehicleCount] = vehicle.clone();
+            this.vehicleCount++;
         }
         return true;
     }
@@ -66,7 +65,7 @@ public class Fleet {
         if (vehicles[index] == null) return false;
 
         // Overwrite old vehicle
-        vehicles[index] = vehicle;
+        vehicles[index] = vehicle.clone();
         return true;
     }
     public Vehicle retrieveVehicle(int index) {
@@ -75,7 +74,8 @@ public class Fleet {
     }
     public Vehicle retrieveVehicle(String plateNumber){
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.getPlateNumber().equals(plateNumber)) return vehicle.clone();
+            if (vehicle != null && vehicle.getPlateNumber().equals(plateNumber))
+                return vehicle.clone();
         }
         return null;
     }
@@ -113,13 +113,29 @@ public class Fleet {
      * @param type Type of vehicle: Diesel Truck (DT), Electric Truck (ET), Electric Car (EC), Gas Car (GC).
      * @return array of vehicles of specified type
      */
+    // TODO this is broken
     public Vehicle[] filterVehicles(String type) {
+        // Create return array
         Vehicle[] returnArray = new Vehicle[vehicleCount];
         int count = 0;
+
+        // Get type
+        Vehicle dummyVehicle = switch (type) {
+            case "DT", "Diesel Truck", "diesel truck", "DieselTruck" -> new DieselTruck();
+            case "ET", "Electric Truck", "electric truck", "ElectricTruck" -> new ElectricTruck();
+            case "EC", "Electric Car", "electric car", "ElectricCar" -> new ElectricCar();
+            case "GC", "Gasoline Car", "gasoline car", "GasolineCar" -> new GasolineCar();
+            default -> null;
+        };
+
+        // If null return
+        if (dummyVehicle == null) return null;
+
+        // Loop through
         for (int i = 0; i < vehicleCount; i++) {
             if (vehicles[i] == null) continue;
             // Check if the vehicle contains the requested type
-            if (vehicles[i].toString().toLowerCase().contains(type.toLowerCase())){
+            if (vehicles[i].getClass() == dummyVehicle.getClass()){
                 // Add vehicle clone to return array
                 returnArray[count] = vehicles[i].clone();
                 // Increment index
@@ -140,9 +156,31 @@ public class Fleet {
         Vehicle[] array = filterVehicles(type);
         return showArray(array, vehicleCount);
     }
+    public String showNotLeased(){
+        // Check not empty
+        if (vehicles == null || vehicles.length == 0) return "Fleet contains no available vehicles.";
+        Vehicle[] returnArray = new Vehicle[vehicleCount];
+        int count = 0;
+
+        // Add not leased vehicles
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle == null) continue;
+            if (vehicle.getIsLeased()) continue;
+            returnArray[count] = vehicle;
+            count++;
+        }
+        // Return string
+        return showArray(returnArray, count);
+    }
 
     @Override
     public String toString(){
+        if (vehicleCount == 0) return """
+                ____________________________________________
+                There are no vehicles in your fleet yet.
+                Add a vehicle, then come back and try again.
+                --------------------------------------------
+                """;
         return showArray(vehicles, vehicleCount);
     }
 
@@ -166,7 +204,7 @@ public class Fleet {
             if (i == 0 || vehicleArray[i].getClass() != vehicleArray[i-1].getClass())
                 returnString += vehicleArray[i].getHeader() + "\n";
 
-            returnString += String.format("%2d %s\n", i, vehicleArray[i]);
+            returnString += String.format("%02d %s\n", i, vehicleArray[i]);
         }
         return returnString;
     }
