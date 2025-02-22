@@ -65,7 +65,7 @@ public class Menu {
             case 2 -> ClientDriver.getMenu();
             case 3 -> LeaseDriver.getMenu();
             case 4 -> Menu.exit(0);
-            default -> {System.err.println("Unexpected choice in Menu main menu");}
+            default -> System.err.println("Unexpected choice in Menu main menu");
         }
     }
 

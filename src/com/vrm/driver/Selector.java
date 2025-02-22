@@ -53,6 +53,6 @@ public class Selector {
     }
     public static void pressToContinue(){
         System.out.println(Colour.W_B + "-> Press <ENTER> to continue <-" + Colour.RESET);
-        String input = Driver.key.nextLine();
+        Driver.key.nextLine();
     }
 }
