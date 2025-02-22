@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Assignment 1:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Assignment_1_jar</output-path>
+    <root id="archive" name="Assignment 1.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/com/vrm/driver/resources/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Assignment 1" />
+      <element id="module-source" name="Assignment 1" />
+    </root>
+  </artifact>
+</component>

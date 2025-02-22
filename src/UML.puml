@@ -1,145 +1,214 @@
 @startuml
 'TODO Finish UML'
-'TODO Check preferred syntax'
 
 'https://plantuml.com/class-diagram
 'skinparam classAttributeIconSize 0
-
-
-
-package vehicle {
-abstract class Vehicle{
+package com.vrm.vehicle {
+    abstract class Vehicle {
         # String plateNumber
-'        TODO make up mind on plate implementation
         - String make
         - String model
         - int year
-        ... Constructors ...
-        + Vehicle()
-        + Vehicle(String make, String model, int year)
-        + Vehicle(Vehicle other)
-        'TODO Check if I need setters, getters'
-        ... Misc...
-        + toString() : String
-        + equals() : boolean
-        + {abstract} clone() : Vehicle
+        - boolean isLeased
+        + String getHeader()
+        + String toString()
+        + boolean equals(Object)
+        ~ {abstract} Vehicle clone()
+    }
+    abstract class Car {
+        - int passengerCapacity
+        + String getHeader()
+        + String toString()
+        - boolean equals(Object)
+    }
+    abstract class Truck {
+        - double weightCapacity
+        + String getHeader()
+        + String toString()
+        + boolean equals(Object)
+    }
+    class ElectricCar {
+        - {static} String lastPlate = 1001
+        - {static} final String PLATE_PREFIX = "EC"
+        - double range
+        - {static} String generatePlate()
+        ~ ElectricCar clone()
+        + String getHeader()
+        + String toString()
+        + boolean equals()
+    }
+    class GasolineCar {
+        - {static} String lastPlate = 1001
+        - {static} final String PLATE_PREFIX = "GC"
+        - {static} String generatePlate()
+        ~ GasolineCar clone()
+        + String getHeader()
+    }
+    class ElectricTruck {
+        - {static} String lastPlate = 1001
+        - {static} String PLATE_PREFIX = "ET"
+        - double range
+        - {static} String generatePlate()
+        ~ ElectricTruck clone()
+        + String getHeader()
+        + String toString()
+        + boolean equals()
+    }
+    class DieselTruck {
+        - {static} String lastPlate = 1001
+        - {static} final String PLATE_PREFIX = "DT"
+        - {static} String generatePlate()
+        ~ DieselTruck clone()
+        + String getHeader()
+        + String toString()
+        + boolean equals()
+    }
+
+    class Fleet {
+    int MAX_CAPACITY
+    Vehicle[] vehicles
+    int vehicleCount
+
+    boolean addVehicle(Vehicle)
+    boolean appendArray(Vehicle[])
+    boolean removeVehicle (int)
+    boolean updateVehicle(int, Vehicle)
+    Vehicle retrieveVehicle (int index)
+    Vehicle retrieve Vehicle(String plateNumber))
+    boolean toggleLeased(String plateNumber)
+    Vehicle[] getVehicles()
+    int getVehicleCount()
+    int getMAX_CAPACITY()
+    Vehicle[] filterVehicles(String type)
+    String showOfType(String type)
+    String showNotLeased()
+    String toString()
+    {static} String showArray(Vehicle[], int length)
+    DieselTruck getLargestTruck()
+    {static} ElectricTruck[] copyVehicles(ElectricTruck[])
+    }
+
+    Fleet o-- Vehicle
+    Vehicle <|-- Truck
+    Vehicle <|-- Car
+    Car <|-- ElectricCar
+    Car <|-- GasolineCar
+    Truck <|-- DieselTruck
+    Truck <|-- ElectricTruck
 }
 
-abstract class Truck {
-    - double weightCapacity
-    ... Constructors ...
-    + Truck()
-    + Truck(String make, String model, int year, double weightCapacity)
-    + Truck(Truck other)
-    ... Get/Set ...
-    + getWeightCapacity() : double
-    + setWeightCapacity(double weightCapacity) : void
-    ... Misc...
-    + toString() : String
-    + equals() : boolean
-}
-abstract class Car {
-    - int passengerCapacity
-    ... Constructors ...
-    + Car()
-    + Car(String make, String model, int year, int passengerCapacity)
-    + Car(Car other)
-    ... Get/Set ...
-    + getPassengerCapacity() : int
-    + setPassengerCapacity(int passengerCapacity) : void
-    ... Misc...
-    + toString() : String
-    + equals() : boolean
-}
+package com.vrm.client {
 
-class DieselTruck {
-    - PLATE_PREFIX : {static} String = "DT"
-    - nextPlate : {static} int = 1001
-    - double fuelCapacity
-    + DieselTruck()
-    + DieselTruck(String make, String model, int year, double weightCapacity, double fuelCapacity)
-    + DieselTruck(DieselTruck other)
-    + getFuelCapacity() : double
-    + setFuelCapacity(double fuelCapacity) : void
-    + toString() : String
-    + equals() : boolean
-    - {static} generatePlate() : String
-    + {abstract} clone() : DieselTruck
-}
-class ElectricTruck{
-    - {static} String PLATE_PREFIX = "ET"
-    - nextPlate : {static} int = 1001
-    - double range
-    + ElectricTruck()
-    + ElectricTruck(String make, String model, int year, double weightCapacity, double range)
-    + ElectricTruck(ElectricTruck other)
-    + getRange() : double
-    + setRange(double range) : void
-    + toString() : String
-    + equals() : boolean
-    - {static} generatePlate() : String
-    + {abstract} clone() : ElectricTruck
+    class ClientManager {
+        - Client[] clients
+        - final int MAX_CLIENTS
+        - int clientCount
+        + Client retrieveClient(int index)
+        + Client retrieveClient(String name)
+        + boolean addClient(Client)
+        + boolean removeClient(int index)
+        + boolean updateClient(int index, String newName)
+        + String toString()
+    }
+    class Client {
+        - String name
+        + boolean equals()
+        + String toString()
+    }
 
-}
-class GasolineCar {
-    - {static} String PLATE_PREFIX = "GC"
-    - nextPlate : {static} int = 1001
-    + GasolineCar()
-    + GasolineCar(String make, String model, int year, int passengerCapacity)
-    + GasolineCar(GasolineCar other)
-    + toString() : String
-    + equals() : boolean
-    - {static} generatePlate() : String
-    + {abstract} clone() : GasolineCar
-}
-class ElectricCar {
-    - {static} String PLATE_PREFIX = "EC"
-    - nextPlate : {static} int = 1001
-    - double range
-    + ElectricCar()
-    + ElectricCar(String make, String model, int year, int passengerCapacity, double range)
-    + ElectricCar(ElectricCar other)
-    + getRange() : double
-    + setRange(double range) : void
-    + toString() : String
-    + equals() : boolean
-    - {static} generatePlate() : String
-    + {abstract} clone() : ElectricCar
-}
+    class Lease {
+        - {static} int nextID = 0
+        - int ID
+        - Client client
+        - int plateNumber
+        + String getHeader()
+        + String toString()
+    }
+    class LeaseManager {
+    - Lease[] leasedVehicles
+    - int leasedVehiclesCount
+    - final Fleet fleet
+    + LeaseManager(Fleet fleet)
+    + int getLastLeaseID()
+    + int createLease(Client client, String plateNumber)
+    + int removeLease(int leaseID)
+    + Lease retrieveLease(int leaseID)
+    - Lease[] getClientLeases() {helper method}
+    + int clientNumberOfLeases(String clientName)
+    + String showClientLeases(String clientName)
+    + String toString()
+    }
 
-Vehicle <|-- Truck
-Vehicle <|-- Car
-Truck <|-- DieselTruck
-Truck <|-- ElectricTruck
-Car <|-- ElectricCar
-Car <|-- GasolineCar
-
-class Fleet {
-    - final static int TYPES = 4
-    - final int MAX_CAPACITY
-    - Vehicle[] vehicles
-    - int vehicleCount
-    ... Constructors ...
-    + Fleet()
-    + Fleet(int capacity)
-    + Fleet(Fleet fleet)
-    ... Operations ...
-    + addVehicle(Vehicle vehicle) : boolean
-    + removeVehicle(int index) : boolean
-    + updateVehicle(int index, Vehicle vehicle) : boolean
-    ... Getters ...
-    + retrieveVehicle(int index) : Vehicle
-    + getVehicles() : Vehicles[]
-    + getVehicleCount() : int
-    + filterVehicles(String type) : Vehicle[]
-    ... Strings ...
-    + showArray(Vehicle[] array) : String
-    + showOfType(String type) : String
-    + toString() : String
+    ClientManager *-- Client
+    LeaseManager *-- Lease
+    Lease -- Client
+    LeaseManager -- Fleet
 
 }
 
-Fleet o-- Vehicle
+package com.vrm.driver {
+    class Driver {
+        ~ {static} Scanner key
+        ~ {static} Fleet fleet
+        ~ {static} ClientManager clientManager
+        ~ {static} LeaseManager leaseManager
+        + {static} void main()
+    }
+    class ClientDriver {
+        + {static} void getMenu()
+        + {static} boolean createClient()
+        + {static} boolean deleteClient()
+        + {static} boolean updateClient()
+    }
+    class FleetDriver {
+        - {static} final String TYPE_MENU = "..."
+        + {static} void getMenu()
+        + {static} boolean createVehicle()
+        + {static} boolean deleteVehicle()
+        + {static} boolean updateVehicle()
+        - {static} boolean updateEC(ElectricCar)
+        - {static} boolean updateGC(GasolineCar)
+        - {static} boolean updateDT(DieselTruck)
+        - {static} boolean updateET(ElectricTruck)
+        + {static} String showAll()
+        + {static} String showOfType()
+        + {static} void getLargestTruck()
+        + {static} boolean copyElectricTrucks()
+
+    }
+    class LeaseDriver {
+        + {static} void getMenu()
+        + {static} boolean leaseVehicle()
+        + {static} boolean endLease()
+        + {static} String showAll()
+        + {static} String showByClient()
+    }
+    class Menu {
+        + {static} void displaySplashScreen()
+        + {static} boolean bootUp()
+        + {static} void getMainMenu()
+        + {static} void exit(int exitCode)
+    }
+    class Selector {
+    + {static} int pickItem(String menu, int min, int max)
+    + {static} int pickLease()
+    + {static} boolean pressToConfirm()
+    + {static} void pressToContinue()
+    }
+    class TestScenario {
+    + {static} void testScenario()
+    }
+
+    Driver --> ClientManager
+    Driver --> Fleet
+    Driver --> LeaseManager
+
+    ClientDriver --> Driver
+    FleetDriver --> Driver
+    LeaseDriver --> Driver
+
+    Driver --> Menu
+    Driver --> TestScenario
 }
 
 

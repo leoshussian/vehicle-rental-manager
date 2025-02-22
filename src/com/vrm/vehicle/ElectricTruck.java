@@ -48,9 +48,6 @@ public class ElectricTruck extends Truck {
     public String toString(){
         return super.toString() + String.format(" %06.2f km | Electric Truck |", range);
     }
-    public boolean equals(ElectricTruck other) {
-        return super.equals(other) && this.range == other.range;
-    }
     @Override
     public boolean equals(Object other){
         return super.equals(other) && this.range == ((ElectricTruck)other).range;

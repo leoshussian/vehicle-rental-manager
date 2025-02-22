@@ -6,7 +6,7 @@ package com.vrm.client;
  */
 public class ClientManager {
     private Client[] clients;
-    private int MAX_CLIENTS;
+    private final int MAX_CLIENTS;
     private int clientCount;
 
     // CONSTRUCTORS

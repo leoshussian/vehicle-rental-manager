@@ -1,10 +1,12 @@
 package com.vrm.driver;
 
 import com.vrm.client.Client;
-import com.vrm.client.ClientManager;
+import static com.vrm.driver.Driver.clientManager;
 
+/**
+ * Handles prompting client creation, deletion, and updates to ClientManager.
+ */
 public class ClientDriver {
-    private static ClientManager clientManager = Driver.clientManager;
 
     public static void getMenu(){
 

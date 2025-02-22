@@ -38,7 +38,4 @@ abstract public class Car extends Vehicle {
     public boolean equals(Object other){
         return super.equals(other) && this.passengerCapacity == ((Car)other).passengerCapacity;
     }
-    public boolean equals(Car other){
-        return super.equals(other) && passengerCapacity == other.passengerCapacity;
-    }
 }

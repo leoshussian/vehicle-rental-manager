@@ -1,33 +1,29 @@
 package com.vrm.driver;
 
+/**
+ * Prompts boot up, exit, and main menu.
+ */
 public class Menu {
 
     // Displays splash screen at launch and exit
-    public static void displaySplashScreen() {
-        String[] art = {"""
-
-        ++++++++++++++++++++++++++++++++++++++++++++++++++++
-        |                                                  |
-        |          ░  ░░░░  ░░       ░░░  ░░░░  ░          |
-        |          ▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒   ▒▒   ▒          |
-        |          ▓▓  ▓▓  ▓▓▓       ▓▓▓        ▓          |
-        |          ███    ████  ███  ███  █  █  █          |
-        |          ████  █████  ████  ██  ████  █          |
-        |                                                  |
-        |                                                  |
-        |              VEHICLE RENTAL MANAGER              |
-        |           Version 1.0   Leo & Co. Inc.           |
-        ++++++++++++++++++++++++++++++++++++++++++++++++++++
-    """
+    public static void displaySplashScreen() throws InterruptedException {
+        String[] art = {
+                "++++++++++++++++++++++++++++++++++++++++++++++++++++",
+                "|                                                  |",
+                "|          ░  ░░░░  ░░       ░░░  ░░░░  ░          |",
+                "|          ▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒   ▒▒   ▒          |",
+                "|          ▓▓  ▓▓  ▓▓▓       ▓▓▓        ▓          |",
+                "|          ███    ████  ███  ███  █  █  █          |",
+                "|          ████  █████  ████  ██  ████  █          |",
+                "|                                                  |",
+                "|                                                  |",
+                "|              VEHICLE RENTAL MANAGER              |",
+                "|           Version 1.0   Leo & Co. Inc.           |",
+                "++++++++++++++++++++++++++++++++++++++++++++++++++++",
         };
         for (String line : art) {
-            System.out.println(line);
-            try {
-                Thread.sleep(100);
-            }
-            catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            System.out.println("\t" + Colour.BLACK + Colour.WHITE_BACKGROUND + line + Colour.RESET);
+            Thread.sleep(50);
         }
     }
 
@@ -36,11 +32,13 @@ public class Menu {
      * @return true for testing mode
      */
     public static boolean bootUp(){
-        System.out.println("""
+        System.out.printf("""
                 ____________________________________________________________________
                           == Welcome to Vehicle Rental Manager 2025 ==
-                > Press any key to access VRM 25 or press <0> to access TEST MODE. <
-                --------------------------------------------------------------------""");
+                %s
+                --------------------------------------------------------------------
+                """
+                ,Colour.W_B + "> Press any key to access VRM 25 or press <0> to access TEST MODE. <" + Colour.RESET);
         String choice = Driver.key.nextLine();
         return choice.equals("0");
     }
@@ -81,10 +79,15 @@ public class Menu {
                 return;
             }
         }
+        try {
+            Menu.displaySplashScreen();
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(Colour.GREEN + "    == Thank you for using Vehicle Rental Manager 2025 ==" + Colour.RESET);
 
-        Menu.displaySplashScreen();
-        System.out.println("== Thank you for using Vehicle Rental Manager 2025 ==");
-
+        Driver.key.close();
         System.exit(status);
     }
 }

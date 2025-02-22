@@ -1,7 +1,7 @@
 package com.vrm.driver;
 
 /**
- * Prompts user from predefined menus.
+ * Gets choices from user
  */
 public class Selector {
 
@@ -14,10 +14,10 @@ public class Selector {
 
         // Loop till valid
         while (true) {
-            System.out.print("\n> Enter your choice, then press <ENTER>: ");
+            System.out.print(Colour.W_B + "\n> Enter your choice, then press <ENTER>: " + Colour.RESET);
             choice = Driver.key.nextInt();
             if (choice < min || choice >= max) {
-                System.err.println("Sorry, your choice is invalid. Try again.");
+                System.err.println(Colour.RED + "Sorry, your choice is invalid. Try again." + Colour.RESET);
                 continue;
             }
             break;
@@ -47,12 +47,12 @@ public class Selector {
      * @return true if user confirms.
      */
     public static boolean pressToConfirm(){
-        System.out.println("-> Press <ENTER> to continue, or type <N> to cancel <-");
+        System.out.println(Colour.W_B + "-> Press <ENTER> to continue, or type <N> to cancel <-" + Colour.RESET);
         String input = Driver.key.nextLine();
         return !input.equalsIgnoreCase("N");
     }
     public static void pressToContinue(){
-        System.out.println("-> Press <ENTER> to continue <-");
+        System.out.println(Colour.W_B + "-> Press <ENTER> to continue <-" + Colour.RESET);
         String input = Driver.key.nextLine();
     }
 }

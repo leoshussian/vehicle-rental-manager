@@ -5,6 +5,9 @@ import com.vrm.vehicle.*;
 
 import java.util.Scanner;
 
+/**
+ * Initializes manager classes and scanner, calls Menu and TestScenario methods.
+ */
 public class Driver {
 
     // 0. Initialize all
@@ -16,7 +19,12 @@ public class Driver {
     public static void main(String[] args) {
 
         // 1. Greet user
-        Menu.displaySplashScreen();
+        try {
+            Menu.displaySplashScreen();
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         // 2. Check if user wants test menu
         if (Menu.bootUp()) {

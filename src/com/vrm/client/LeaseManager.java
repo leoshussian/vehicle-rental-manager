@@ -18,8 +18,8 @@ public class LeaseManager {
     }
 
     /**
-     * Instantiates {@link Lease} and add it to {@link this.leasedVehicles}.
-     * Makes {@link Vehicle}.isLeased = true.
+     * Instantiates Lease and add it to leasedVehicles.
+     * Makes Vehicle.isLeased = true.
      * @return 0 if successful, 1 if vehicle = null, 2 if vehicle is already leased, 3 if array is full.
      */
     public int createLease(Client client, String plateNumber){
@@ -40,6 +40,10 @@ public class LeaseManager {
         leasedVehicles[leasedVehiclesCount++] = new Lease(client, plateNumber);
         return 0;
     }
+
+    /**
+     * @return Lease ID of last lease given.
+     */
     public int getLastLeaseID(){
         return leasedVehicles[leasedVehiclesCount - 1].getID();
     }
@@ -74,7 +78,7 @@ public class LeaseManager {
         }
         return null;
     }
-    public Vehicle retrieveVehicleFromLease(int iD){
+    public Vehicle retrieveVehicleFromLease(int iD){ // TODO Flagged for deletion
         if (leasedVehiclesCount == 0) return null;
         for (Lease lease : leasedVehicles) {
             if (lease.getID() == iD) {
@@ -86,6 +90,9 @@ public class LeaseManager {
         return null;
     }
 
+    /**
+     * @return Array of lease references with matching client. Leases
+     */
     private Lease[] getClientLeases(String clientName) {
         Lease[] result = new Lease[leasedVehiclesCount];
         int count = 0;

@@ -3,7 +3,7 @@ package com.vrm.vehicle;
 public class GasolineCar extends Car {
     /** Last used plate integer **/
     private static int lastPlate = 1001;
-    private static final String PLATE_PREFIX = "EC";
+    private static final String PLATE_PREFIX = "GC";
 
     // CONSTRUCTORS
     public GasolineCar() {

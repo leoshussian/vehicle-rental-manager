@@ -147,7 +147,7 @@ public class Fleet {
 
     // DISPLAY METHODS
     /**
-     * Fetches array of specified type then calls {@link this.showArray()}
+     * Fetches array of specified type then calls this.showArray().
      * @param type Type of vehicle: Diesel Truck (DT), Electric Truck (ET), Electric Car (EC), Gas Car (GC).
      * @return String of array of vehicles with header.
      */

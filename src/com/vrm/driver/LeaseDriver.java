@@ -26,12 +26,12 @@ public class LeaseDriver {
                                                          ▒  ▒▒▒▒  ▒
                                                          ▓       ▓▓
                      RENTAL OPERATIONS                   █  ███  ██
-                     Number of rentals: %02d               █  ████  █
+                     Number of leases: %02d                █  ████  █
                     ________________________________________________
-                    1 | Rent vehicle to client
-                    2 | Return vehicle and terminate contract
-                    3 | Show all contracts
-                    4 | Find client contracts
+                    1 | Lease vehicle to client
+                    2 | Return vehicle and terminate lease
+                    3 | Show all leases
+                    4 | Find client leases
                     5 | Back
                   """, leaseManager.getLeasedVehiclesCount());
 
@@ -127,14 +127,14 @@ public class LeaseDriver {
 
         // Confirm
         System.out.println("Are you sure you want to terminate this lease?");
-        System.out.println(Driver.leaseManager.retrieveLease(leaseID));
+        System.out.println(leaseManager.retrieveLease(leaseID));
 
         if (!Selector.pressToConfirm()) {
             System.out.println("Got it. This lease was not terminated.");
             return true;
         }
 
-        int output = Driver.leaseManager.removeLease(leaseID);
+        int output = leaseManager.removeLease(leaseID);
         switch (output){
             case 0 -> {
                 System.out.println("The lease was terminated successfully. The car was returned to the fleet.");

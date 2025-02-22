@@ -1,4 +1,5 @@
 package com.vrm.vehicle;
+import com.vrm.driver.Colour;
 
 abstract public class Vehicle {
     protected String plateNumber; // TODO Sanity check this!
@@ -67,7 +68,7 @@ abstract public class Vehicle {
     }
     @Override
     public String toString(){
-        String leasedFlag = !this.isLeased ? "█YES█████" : "░NO░░░░░░";
+        String leasedFlag = !this.isLeased ? Colour.GREEN_BACKGROUND + " YES     " + Colour.RESET: Colour.RED_BACKGROUND + " NO      " + Colour.RESET;
         return String.format("|%s| %-8s | %-13s | %-11s | %4d |", leasedFlag, plateNumber, make, model, year);
     }
     public boolean equals(Object other){
