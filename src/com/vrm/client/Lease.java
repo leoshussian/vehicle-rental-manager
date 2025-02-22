@@ -1,7 +1,8 @@
 package com.vrm.client;
 
-import com.vrm.vehicle.Vehicle;
-
+/**
+ * Represents a vehicle lease associated with a client and a vehicle's plate number.
+ */
 public class Lease {
     private static int nextID = 0;
     private final int ID;

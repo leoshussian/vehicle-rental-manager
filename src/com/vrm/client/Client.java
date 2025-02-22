@@ -1,6 +1,4 @@
 package com.vrm.client;
-import com.vrm.vehicle.Fleet;
-import com.vrm.vehicle.Vehicle;
 
 public class Client {
     private String name;

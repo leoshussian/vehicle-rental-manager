@@ -1,8 +1,8 @@
 package com.vrm.client;
 
 /**
- * Manages client list.
- * Handles adding and deleting clients.
+ * Manages array of clients.
+ * Adds, removes, retrieves, and updates client information.
  */
 public class ClientManager {
     private Client[] clients;
@@ -38,6 +38,14 @@ public class ClientManager {
         if (index < 0 || index >= clientCount) return null;
         return new Client(clients[index]);
     }
+
+    /**
+     * Retrieves a client by their name.
+     * Case-insensitive search.
+     *
+     * @param name The name of the client to search for.
+     * @return The Client object if found, otherwise null.
+     */
     public Client retrieveClient(String name) {
         for (int i = 0; i < MAX_CLIENTS; i++) {
             if (clients[i] == null) continue;
@@ -47,6 +55,13 @@ public class ClientManager {
     }
 
     // CLIENT OPERATIONS
+    /**
+     * Adds a new client to the manager.
+     * Stores a copy of the client object.
+     *
+     * @param client The Client object to add.
+     * @return True if the client was added successfully, false if the array is full.
+     */
     public boolean addClient(Client client) {
         // Check client capacity
         if (clientCount >= MAX_CLIENTS) return false;

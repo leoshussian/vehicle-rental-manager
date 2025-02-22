@@ -18,7 +18,7 @@ public class Menu {
                 "|                                                  |",
                 "|                                                  |",
                 "|              VEHICLE RENTAL MANAGER              |",
-                "|           Version 1.0   Leo & Co. Inc.           |",
+                "|           Version 1.0   Leo S. Hussain           |",
                 "++++++++++++++++++++++++++++++++++++++++++++++++++++",
         };
         for (String line : art) {

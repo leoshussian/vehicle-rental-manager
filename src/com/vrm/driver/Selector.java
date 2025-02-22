@@ -1,11 +1,19 @@
 package com.vrm.driver;
 
+
 /**
- * Gets choices from user
+ * Utility methods for user input selection in the console.
  */
 public class Selector {
 
-
+    /**
+     * Display and prompt user to select an option.
+     *
+     * @param menu The menu options to display.
+     * @param min (inclusive).
+     * @param max (exclusive).
+     * @return Choice.
+     */
     public static int pickItem(String menu, int min, int max){
         System.out.println();
         // Show selection
@@ -44,7 +52,7 @@ public class Selector {
     }
 
     /**
-     * @return true if user confirms.
+     * @return True if the user confirms, false if canceled.
      */
     public static boolean pressToConfirm(){
         System.out.println(Colour.W_B + "-> Press <ENTER> to continue, or type <N> to cancel <-" + Colour.RESET);

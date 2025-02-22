@@ -113,7 +113,6 @@ public class Fleet {
      * @param type Type of vehicle: Diesel Truck (DT), Electric Truck (ET), Electric Car (EC), Gas Car (GC).
      * @return array of vehicles of specified type
      */
-    // TODO this is broken
     public Vehicle[] filterVehicles(String type) {
         // Create return array
         Vehicle[] returnArray = new Vehicle[vehicleCount];

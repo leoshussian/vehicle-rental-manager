@@ -3,6 +3,10 @@ package com.vrm.client;
 import com.vrm.vehicle.Fleet;
 import com.vrm.vehicle.Vehicle;
 
+/**
+ * Responsible for managing vehicle leases within a fleet.
+ * Allows for creation, retrieval, and removal of leases, as well as tracking leases by client.
+ */
 public class LeaseManager {
     private Lease[] leasedVehicles;
     private int leasedVehiclesCount;
@@ -18,9 +22,13 @@ public class LeaseManager {
     }
 
     /**
-     * Instantiates Lease and add it to leasedVehicles.
-     * Makes Vehicle.isLeased = true.
-     * @return 0 if successful, 1 if vehicle = null, 2 if vehicle is already leased, 3 if array is full.
+     * Creates a new lease for a vehicle and associates it with a client.
+     * Updates the vehicle's leased status.
+     *
+     * @param client The client leasing the vehicle.
+     * @param plateNumber The license plate number of the vehicle to lease.
+     * @return 0 if successful, 1 if vehicle is null, 2 if vehicle is already leased,
+     * 3 if lease array is full, 4 if vehicle lease toggle fails.
      */
     public int createLease(Client client, String plateNumber){
         // Get vehicle
@@ -42,11 +50,20 @@ public class LeaseManager {
     }
 
     /**
-     * @return Lease ID of last lease given.
+     * Returns the Lease ID of the most recently created lease.
+     *
+     * @return The ID of the last lease.
      */
     public int getLastLeaseID(){
         return leasedVehicles[leasedVehiclesCount - 1].getID();
     }
+    /**
+     * Removes a lease by its ID.
+     * Terminated leases set vehicle to not leased.
+     *
+     * @param iD The ID of the lease to remove.
+     * @return 0 if successful, 1 if no leases exist, 2 if lease ID not found.
+     */
     public int removeLease(int iD){
         if (leasedVehiclesCount == 0) return 1;
 
@@ -68,6 +85,13 @@ public class LeaseManager {
         }
         return 2;
     }
+
+    /**
+     * Retrieves a lease by its ID.
+     *
+     * @param iD The ID of the lease to retrieve.
+     * @return The Lease object if found, otherwise null.
+     */
     public Lease retrieveLease(int iD){
         if (leasedVehiclesCount == 0) return null;
         for (Lease lease : leasedVehicles) {
@@ -76,17 +100,6 @@ public class LeaseManager {
                 return lease;
             }
         }
-        return null;
-    }
-    public Vehicle retrieveVehicleFromLease(int iD){ // TODO Flagged for deletion
-        if (leasedVehiclesCount == 0) return null;
-        for (Lease lease : leasedVehicles) {
-            if (lease.getID() == iD) {
-                String plateNumber = lease.getPlateNumber();
-                return fleet.retrieveVehicle(plateNumber);
-            }
-        }
-        // Else
         return null;
     }
 
@@ -105,6 +118,13 @@ public class LeaseManager {
         }
         return result;
     }
+
+    /**
+     * Returns the number of leases associated with a specific client.
+     *
+     * @param clientName The name of the client.
+     * @return The number of leases the client has.
+     */
     public int clientNumberOfLeases(String clientName) {
         // Get client leases
         Lease[] clientLeases = getClientLeases(clientName);
@@ -116,6 +136,13 @@ public class LeaseManager {
         }
         return count;
     }
+
+    /**
+     * Returns a formatted string showing all leases associated with a specific client.
+     *
+     * @param clientName The name of the client.
+     * @return A formatted string of lease information or a message if none exist.
+     */
     public String showClientLeases(String clientName) {
         if (leasedVehiclesCount == 0) return "This customer has no leases yet.";
         Lease[] clientLeases = getClientLeases(clientName);
