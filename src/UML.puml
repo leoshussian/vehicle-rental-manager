@@ -1,8 +1,8 @@
 @startuml
 'TODO Finish UML'
 
-'https://plantuml.com/class-diagram
-'skinparam classAttributeIconSize 0
+skinparam classAttributeIconSize 0
+
 package com.vrm.vehicle {
     abstract class Vehicle {
         # String plateNumber
@@ -65,27 +65,27 @@ package com.vrm.vehicle {
     }
 
     class Fleet {
-    int MAX_CAPACITY
-    Vehicle[] vehicles
-    int vehicleCount
+    - int MAX_CAPACITY
+    - Vehicle[] vehicles
+    - int vehicleCount
 
-    boolean addVehicle(Vehicle)
-    boolean appendArray(Vehicle[])
-    boolean removeVehicle (int)
-    boolean updateVehicle(int, Vehicle)
-    Vehicle retrieveVehicle (int index)
-    Vehicle retrieve Vehicle(String plateNumber))
-    boolean toggleLeased(String plateNumber)
-    Vehicle[] getVehicles()
-    int getVehicleCount()
-    int getMAX_CAPACITY()
-    Vehicle[] filterVehicles(String type)
-    String showOfType(String type)
-    String showNotLeased()
-    String toString()
-    {static} String showArray(Vehicle[], int length)
-    DieselTruck getLargestTruck()
-    {static} ElectricTruck[] copyVehicles(ElectricTruck[])
+    + boolean addVehicle(Vehicle)
+    + boolean appendArray(Vehicle[])
+    + boolean removeVehicle (int)
+    + boolean updateVehicle(int, Vehicle)
+    + Vehicle retrieveVehicle (int index)
+    + Vehicle retrieve Vehicle(String plateNumber))
+    + boolean toggleLeased(String plateNumber)
+    + Vehicle[] getVehicles()
+    + int getVehicleCount()
+    + int getMAX_CAPACITY()
+    + Vehicle[] filterVehicles(String type)
+    + String showOfType(String type)
+    + String showNotLeased()
+    + String toString()
+    + {static} String showArray(Vehicle[], int length)
+    + DieselTruck getLargestTruck()
+    + {static} ElectricTruck[] copyVehicles(ElectricTruck[])
     }
 
     Fleet o-- Vehicle
