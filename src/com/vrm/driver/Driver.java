@@ -1,6 +1,6 @@
 // ------------------------------------------------------------------------------------
 // Assignment 1
-// Leo Hussain ***REMOVED***
+// Leo Hussain
 // ------------------------------------------------------------------------------------
 
 /* VEHICLE RENTAL MANAGER 2025 (V.R.M. for short) is a rental manager system developed in-house at RoyalRentals.
